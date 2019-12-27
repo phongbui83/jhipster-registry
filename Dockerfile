@@ -17,12 +17,11 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS="" \
     SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8761
-RUN apt-get install -y curl && \
+RUN apt-get install -y curl wget && \
     apt-get clean && \
     mkdir /target && \
-    chmod g+rwx /target
-CMD java \
-        ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom \
-        -jar /jhipster-registry.jar
+    chmod g+rwx /target && \
+    wget https://raw.githubusercontent.com/phongbui83/jhipster-registry/master/start.sh
+CMD bash /start.sh
 
 COPY --from=builder /jhipster-registry.jar .
